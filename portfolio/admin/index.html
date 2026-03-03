@@ -11,9 +11,8 @@
   <div class="container">
     <h2>Update Portfolio Details</h2>
 
-    <form id="portfolio-form" enctype="multipart/form-data">
+    <form id="dataForm" enctype="multipart/form-data">
 
-      <!-- Personal Info -->
       <fieldset>
         <legend>Personal Information</legend>
 
@@ -31,9 +30,11 @@
 
         <label>Upload CV (PDF)</label>
         <input type="file" name="cv" accept=".pdf">
+
+        <label>Upload Avatar (Image)</label>
+        <input type="file" name="avatar" accept="image/*">
       </fieldset>
 
-      <!-- Skills -->
       <fieldset>
         <legend>Skills</legend>
 
@@ -41,12 +42,10 @@
         <input type="text" name="skills" placeholder="HTML, CSS, JavaScript, Laravel">
       </fieldset>
 
-      <!-- Projects Section -->
       <fieldset id="projects-fieldset">
         <legend>Project Details</legend>
         
         <div id="projects-container">
-          <!-- Dynamic Project Fields Will Appear Here -->
         </div>
 
         <button type="button" id="add-project-btn" class="btn secondary">+ Add Project</button>
@@ -58,5 +57,56 @@
   </div>
 
   <script src="script.js"></script>
+  <script>document.getElementById('add-project-btn').addEventListener('click', function () {
+  const newDiv = document.createElement('div');
+  newDiv.classList.add('project');
+
+  const titleLabel = document.createElement('label');
+  titleLabel.textContent = 'Title:';
+  const titleInput = document.createElement('input');
+  titleInput.type = 'text';
+  titleInput.placeholder = 'Enter project title';
+  titleInput.name = 'title';
+
+  const descriptionLabel = document.createElement('label');
+  descriptionLabel.textContent = 'Description:';
+  const descriptionInput = document.createElement('textarea');
+  descriptionInput.placeholder = 'Enter project description';
+  descriptionInput.name = 'description';
+
+  const gitLabel = document.createElement('label');
+  gitLabel.textContent = 'GitLink:';
+  const gitLinkInput = document.createElement('input');
+  gitLinkInput.type = 'url';
+  gitLinkInput.placeholder = 'Enter GitHub repository URL';
+  gitLinkInput.name = 'gitlink';
+
+  const liveLabel = document.createElement('label');
+  liveLabel.textContent = 'Live Link:';
+  const liveLinkInput = document.createElement('input');
+  liveLinkInput.type = 'url';
+  liveLinkInput.placeholder = 'Enter live demo link';
+  liveLinkInput.name = 'livelink';
+
+  const removeBtn = document.createElement('button');
+  removeBtn.textContent = 'Remove Project';
+  removeBtn.classList.add('remove-btn');
+  removeBtn.addEventListener('click', function () {
+    newDiv.remove();
+  });
+
+  newDiv.appendChild(titleLabel);
+  newDiv.appendChild(titleInput);
+  newDiv.appendChild(descriptionLabel);
+  newDiv.appendChild(descriptionInput);
+  newDiv.appendChild(gitLabel);
+  newDiv.appendChild(gitLinkInput);
+  newDiv.appendChild(liveLabel);
+  newDiv.appendChild(liveLinkInput);
+  newDiv.appendChild(removeBtn);
+
+  const projectContainer = document.getElementById('projects-container');
+  projectContainer.appendChild(newDiv);
+});</script>
 </body>
 </html>
