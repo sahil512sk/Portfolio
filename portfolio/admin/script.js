@@ -22,33 +22,48 @@ document.addEventListener('DOMContentLoaded', function () {
       // console.log(key, value);
     }
 
+    // console.log('formData :', formData.has('title'), formData.has('description'), formData.has('gitlink'), formData.has('livelink'));
     const hasFile = (formData.has('cv') && formData.get('cv') instanceof File) ||
       (formData.has('avatar') && formData.get('avatar') instanceof File);
     // console.log('Has file:', hasFile);
 
     let response;
-    if (hasFile) {
+    if (formData.has('title') || formData.has('description') || formData.has('gitlink') || formData.has('livelink')) {
       try {
-        response = await fetch('http://localhost:3000/users/postUsers', {
-          method: 'POST',
-          body: formData
-        });
-      } catch (err) {
-        // console.error('Error uploading file:', err);
-        alert('Failed to upload files.');
-        return;
-      }
-    } else {
-      try {
-        response = await fetch('http://localhost:3000/users/postUsers', {
+        response = await fetch('http://localhost:3000/projects/postProjects', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
       } catch (err) {
-        // console.error('Error submitting data:', err);
-        alert('Failed to submit data.');
+        // console.error('Error submitting project data:', err);
+        alert('Failed to submit project data.');
         return;
+      }
+    } else {
+      if (hasFile) {
+        try {
+          response = await fetch('http://localhost:3000/users/postUsers', {
+            method: 'POST',
+            body: formData
+          });
+        } catch (err) {
+          // console.error('Error uploading file:', err);
+          alert('Failed to upload files.');
+          return;
+        }
+      } else {
+        try {
+          response = await fetch('http://localhost:3000/users/postUsers', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+        } catch (err) {
+          // console.error('Error submitting data:', err);
+          alert('Failed to submit data.');
+          return;
+        }
       }
     }
 

@@ -1,8 +1,5 @@
-// models/usersModel.js
-
 const mongoose = require('mongoose');
 
-// Define the user schema
 const usersSchema = new mongoose.Schema(
   {
     name: {
@@ -21,7 +18,7 @@ const usersSchema = new mongoose.Schema(
     },
     cv: {
       type: String,
-      required: false, // File path for CV (optional)
+      required: true,
     },
     skills: {
       type: [String],
@@ -29,11 +26,11 @@ const usersSchema = new mongoose.Schema(
     },
     about: {
       type: String,
-      default: '',
+      required: true,
     },
     avatar: {
       type: String,
-      required: false, // File path for avatar (optional)
+      required: true,
     },
   },
   { timestamps: true }
