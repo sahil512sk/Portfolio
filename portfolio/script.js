@@ -1,22 +1,75 @@
-// async function loadProjects() {
-//   const res = await fetch("/api/projects");
-//   const projects = await res.json();
+async function loadData() {
+  try {
+    const userRes = await fetch('http://localhost:3000/users/getUsers');
+    const userData = await userRes.json();
 
-//   const container = document.getElementById("projects");
+    if (userData.length > 0) {
+      const user = userData[0];
+      document.getElementById('person-name').textContent = user.name || 'Sahil';
+      document.getElementById('person-role').textContent = user.role || 'Web Developer';
+      document.getElementById('person-about').textContent = user.about || 'Hello — I\'m a web developer focused on building clean, accessible interfaces and fast experiences.';
+      document.getElementById('person-email').textContent = user.email || 'sahil512sk@gmail.com';
 
-//   projects.forEach(project => {
-//     container.innerHTML += `
-//       <div class="project-card">
-//         <h3>${project.title}</h3>
-//         <p>${project.description}</p>
-//         <a href="${project.githubLink}" target="_blank">GitHub</a>
-//         <a href="${project.liveLink}" target="_blank">Live</a>
-//       </div>
-//     `;
-//   });
-// }
+      const skillsList = document.querySelector('.skills');
+      if (user.skills && user.skills.length > 0) {
+        skillsList.innerHTML = user.skills.map(skill => `<li>${skill}</li>`).join('');
+      }
 
-// loadProjects();
+      if (user.cv) {
+        const cvLink = document.querySelector('a[href*="cv.pdf"]');
+        if (cvLink) {
+          cvLink.href = `http://localhost:3000/uploads/${user.cv}`;
+        }
+      }
+    }
+
+    const projectsRes = await fetch('http://localhost:3000/projects/getProjects');
+    const projects = await projectsRes.json();
+
+    const projectsContainer = document.querySelector('.projects-container');
+    if (projects && projects.length > 0) {
+      const existingCards = projectsContainer.querySelectorAll('.project-card');
+      existingCards.forEach(card => card.remove());
+
+      projects.forEach(project => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project-card';
+
+        projectCard.innerHTML = `
+          <h4>${project.title}</h4>
+          <p>${project.description}</p>
+          <div class="project-links">
+            <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
+            <a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>
+          </div>
+        `;
+
+        projectCard.addEventListener('click', () => {
+          const modal = document.getElementById('project-modal');
+          const modalTitle = document.getElementById('modal-title');
+          const modalDesc = document.getElementById('modal-desc');
+          const modalLinks = document.getElementById('modal-links');
+
+          modalTitle.textContent = project.title;
+          modalDesc.textContent = project.description;
+          modalLinks.innerHTML = `
+            <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
+            <a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>
+          `;
+
+          modal.classList.add('show');
+          modal.setAttribute('aria-hidden', 'false');
+        });
+
+        projectsContainer.appendChild(projectCard);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading data:', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadData);
 
 const $ = (e) => document.querySelector(e);
 const $$ = (e) => document.querySelectorAll(e);
