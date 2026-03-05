@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio Admin Form</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <div class="container">
@@ -44,7 +46,7 @@
 
       <fieldset id="projects-fieldset">
         <legend>Project Details</legend>
-        
+
         <div id="projects-container">
         </div>
 
@@ -58,55 +60,56 @@
 
   <script src="script.js"></script>
   <script>document.getElementById('add-project-btn').addEventListener('click', function () {
-  const newDiv = document.createElement('div');
-  newDiv.classList.add('project');
+      const newDiv = document.createElement('div');
+      newDiv.classList.add('project');
 
-  const titleLabel = document.createElement('label');
-  titleLabel.textContent = 'Title:';
-  const titleInput = document.createElement('input');
-  titleInput.type = 'text';
-  titleInput.placeholder = 'Enter project title';
-  titleInput.name = 'title';
+      const titleLabel = document.createElement('label');
+      titleLabel.textContent = 'Title:';
+      const titleInput = document.createElement('input');
+      titleInput.type = 'text';
+      titleInput.placeholder = 'Enter project title';
+      titleInput.name = 'title';
 
-  const descriptionLabel = document.createElement('label');
-  descriptionLabel.textContent = 'Description:';
-  const descriptionInput = document.createElement('textarea');
-  descriptionInput.placeholder = 'Enter project description';
-  descriptionInput.name = 'description';
+      const descriptionLabel = document.createElement('label');
+      descriptionLabel.textContent = 'Description:';
+      const descriptionInput = document.createElement('textarea');
+      descriptionInput.placeholder = 'Enter project description';
+      descriptionInput.name = 'description';
 
-  const gitLabel = document.createElement('label');
-  gitLabel.textContent = 'GitLink:';
-  const gitLinkInput = document.createElement('input');
-  gitLinkInput.type = 'url';
-  gitLinkInput.placeholder = 'Enter GitHub repository URL';
-  gitLinkInput.name = 'gitlink';
+      const gitLabel = document.createElement('label');
+      gitLabel.textContent = 'GitLink:';
+      const gitLinkInput = document.createElement('input');
+      gitLinkInput.type = 'url';
+      gitLinkInput.placeholder = 'Enter GitHub repository URL';
+      gitLinkInput.name = 'gitlink';
 
-  const liveLabel = document.createElement('label');
-  liveLabel.textContent = 'Live Link:';
-  const liveLinkInput = document.createElement('input');
-  liveLinkInput.type = 'url';
-  liveLinkInput.placeholder = 'Enter live demo link';
-  liveLinkInput.name = 'livelink';
+      const liveLabel = document.createElement('label');
+      liveLabel.textContent = 'Live Link:';
+      const liveLinkInput = document.createElement('input');
+      liveLinkInput.type = 'url';
+      liveLinkInput.placeholder = 'Enter live demo link';
+      liveLinkInput.name = 'livelink';
 
-  const removeBtn = document.createElement('button');
-  removeBtn.textContent = 'Remove Project';
-  removeBtn.classList.add('remove-btn');
-  removeBtn.addEventListener('click', function () {
-    newDiv.remove();
-  });
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Remove Project';
+      removeBtn.classList.add('remove-btn');
+      removeBtn.addEventListener('click', function () {
+        newDiv.remove();
+      });
 
-  newDiv.appendChild(titleLabel);
-  newDiv.appendChild(titleInput);
-  newDiv.appendChild(descriptionLabel);
-  newDiv.appendChild(descriptionInput);
-  newDiv.appendChild(gitLabel);
-  newDiv.appendChild(gitLinkInput);
-  newDiv.appendChild(liveLabel);
-  newDiv.appendChild(liveLinkInput);
-  newDiv.appendChild(removeBtn);
+      newDiv.appendChild(titleLabel);
+      newDiv.appendChild(titleInput);
+      newDiv.appendChild(descriptionLabel);
+      newDiv.appendChild(descriptionInput);
+      newDiv.appendChild(gitLabel);
+      newDiv.appendChild(gitLinkInput);
+      newDiv.appendChild(liveLabel);
+      newDiv.appendChild(liveLinkInput);
+      newDiv.appendChild(removeBtn);
 
-  const projectContainer = document.getElementById('projects-container');
-  projectContainer.appendChild(newDiv);
-});</script>
+      const projectContainer = document.getElementById('projects-container');
+      projectContainer.appendChild(newDiv);
+    });</script>
 </body>
+
 </html>

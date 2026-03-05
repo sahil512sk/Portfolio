@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 });
 
 // Initialize multer with the storage configuration
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   // Don't filter any fields - let all form fields through
 });

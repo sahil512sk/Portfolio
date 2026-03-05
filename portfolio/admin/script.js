@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (!projectData.projects) {
             projectData.projects = [];
           }
-          
+
           const projectInputs = form.querySelectorAll(`input[name="${key}"], textarea[name="${key}"]`);
           projectInputs.forEach((input, index) => {
             if (input.value && input.value.trim()) {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let responses = [];
 
     if (hasUserData) {
-      let userResponse; 
+      let userResponse;
       if (hasFile) {
         try {
           userResponse = await fetch('http://localhost:3000/users/postUsers', {

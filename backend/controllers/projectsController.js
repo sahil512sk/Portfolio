@@ -19,10 +19,10 @@ const postProject = async (req, res) => {
 
         // Handle multiple projects
         let projectsToSave = [];
-        
+
         if (req.body.projects && Array.isArray(req.body.projects)) {
             // Multiple projects
-            projectsToSave = req.body.projects.filter(project => 
+            projectsToSave = req.body.projects.filter(project =>
                 project.title && project.description && project.gitlink && project.livelink
             );
         } else if (req.body.title && req.body.description && req.body.gitlink && req.body.livelink) {
