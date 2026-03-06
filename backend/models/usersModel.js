@@ -4,33 +4,49 @@ const usersSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
     },
     role: {
       type: String,
-      required: true,
+      required: false,
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+      required: false,
+      unique: false,
       match: [/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, 'Please enter a valid email address'],
+    },
+    whatsapp: {
+      type: String,
+      required: false,
+    },
+    github: {
+      type: String,
+      required: false,
     },
     cv: {
       type: String,
-      required: true,
+      required: false,
     },
-    skills: {
+    frontend: {
+      type: [String],
+      default: [],
+    },
+    backend: {
+      type: [String],
+      default: [],
+    },
+    tools: {
       type: [String],
       default: [],
     },
     about: {
       type: String,
-      required: true,
+      default: '',
     },
     avatar: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }

@@ -21,17 +21,15 @@ const postProject = async (req, res) => {
         let projectsToSave = [];
 
         if (req.body.projects && Array.isArray(req.body.projects)) {
-            // Multiple projects
-            projectsToSave = req.body.projects.filter(project =>
-                project.title && project.description && project.gitlink && project.livelink
-            );
-        } else if (req.body.title && req.body.description && req.body.gitlink && req.body.livelink) {
-            // Single project
+            // Multiple projects - save all projects regardless of missing fields
+            projectsToSave = req.body.projects;
+        } else if (req.body.title || req.body.description || req.body.gitlink || req.body.livelink) {
+            // Single project - save even if some fields are missing
             projectsToSave = [req.body];
         }
 
         if (projectsToSave.length === 0) {
-            return res.status(400).json({ error: 'No valid projects to save. All fields (title, description, gitlink, livelink) are required for each project.' });
+            return res.status(400).json({ error: 'No project data provided' });
         }
 
         // Save all projects

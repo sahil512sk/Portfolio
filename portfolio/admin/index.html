@@ -19,16 +19,22 @@
         <legend>Personal Information</legend>
 
         <label>Full Name</label>
-        <input type="text" name="name" required>
+        <input type="text" name="name">
 
         <label>Role / Title</label>
-        <input type="text" name="role" required>
+        <input type="text" name="role">
 
         <label>Email</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email">
+
+        <label>WhatsApp link</label>
+        <input type="url" name="whatsapp">
+
+        <label>Github link</label>
+        <input type="url" name="github">
 
         <label>About You</label>
-        <textarea name="about" rows="4" required></textarea>
+        <textarea name="about" rows="4"></textarea>
 
         <label>Upload CV (PDF)</label>
         <input type="file" name="cv" accept=".pdf">
@@ -40,8 +46,14 @@
       <fieldset>
         <legend>Skills</legend>
 
-        <label>Skills (comma separated)</label>
-        <input type="text" name="skills" placeholder="HTML, CSS, JavaScript, Laravel">
+        <label>Frontend (comma separated)</label>
+        <input type="text" name="frontend" placeholder="HTML, CSS, JavaScript, Laravel">
+
+        <label>Backend (comma separated)</label>
+        <input type="text" name="backend" placeholder="PHP, Node.js, Express, MongoDB">
+
+        <label>Tools (comma separated)</label>
+        <input type="text" name="tools" placeholder="Github, VS Code, Figma">
       </fieldset>
 
       <fieldset id="projects-fieldset">
@@ -86,7 +98,6 @@
       const liveLabel = document.createElement('label');
       liveLabel.textContent = 'Live Link:';
       const liveLinkInput = document.createElement('input');
-      liveLinkInput.type = 'url';
       liveLinkInput.placeholder = 'Enter live demo link';
       liveLinkInput.name = 'livelink';
 

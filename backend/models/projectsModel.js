@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 const projectSchema = new mongoose.Schema({
     title: {
         type: String,
-        // required: true,
+        required: true,
     },
     description: {
         type: String,
-        // required: true,
+        required: false,
     },
     gitlink: {
         type: String,
-        // required: true,
+        required: true,
     },
     livelink: {
         type: String,
-        // required: true,
+        required: false,
     }
 },
     {

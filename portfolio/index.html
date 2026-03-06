@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Sahil — Portfolio</title>
   <meta name="description" content="Portfolio of Sahil — web developer, designer, logic builder." />
-  <!-- Google Font (optional) -->
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,11 +15,12 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#home">Sahil</a>
-
       <nav class="nav" id="main-nav" aria-label="Primary">
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#services">Services</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -27,7 +28,7 @@
 
       <div class="header-actions">
         <button id="theme-toggle" aria-pressed="false" title="Toggle dark mode">🌙</button>
-        <button id="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle menu">☰</button>
+        <button id="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰</button>
       </div>
     </div>
   </header>
@@ -36,18 +37,20 @@
     <section id="home" class="hero" tabindex="-1">
       <div class="container hero-inner">
         <div class="hero-text">
-          <h1>Hi — I’m <span class="accent" id="person-name">Sahil</span>.</h1>
+          <h1>Hi — My Name is <span class="accent" id="person-name">Sahil</span>.</h1>
+
           <p class="lead" id="person-role">
             I build accessible, performant web experiences.
           </p>
+
           <p class="ctas">
             <a class="btn primary" href="#projects">View projects</a>
-            <a class="btn" href="#contact">Get in touch</a>
+            <a class="btn" href="#contact">Hire me</a>
           </p>
         </div>
+
         <div class="hero-visual" aria-hidden="true">
-          <!-- decorative SVG / placeholder -->
-          <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" role="img">
+          <svg width="300" height="200" viewBox="0 0 300 200">
             <rect width="300" height="200" rx="16" fill="url(#g)" />
             <defs>
               <linearGradient id="g" x1="0" x2="1">
@@ -62,36 +65,106 @@
 
     <section id="about" class="about">
       <div class="container">
-        <h2>About</h2>
-        <p id="person-about">Hello — I'm a web developer focused on building clean, accessible interfaces and fast
-          experiences. I enjoy
-          collaborating with designers and product teams to turn ideas into polished products.</p>
-        <ul class="skills" aria-label="Skills list">
-          <li>HTML &amp; CSS</li>
-          <li>JavaScript (ES6+)</li>
-          <li>Laravel (php)</li>
-          <li>Postman</li>
-          <li>Accessibility & Performance</li>
-        </ul>
+        <h2>About Me</h2>
+        <h3 id="person-about">
+          Hi, I am a passionate web developer with a strong interest in creating responsive and
+          user-friendly websites. I have experience working with HTML, CSS, JavaScript,
+          Laravel (PHP) and modern web technologies. I enjoy solving problems and
+          continuously learning new tools to improve my development skills.
+          My goal is to build impactful digital products and grow as a full-stack developer.
+        </h3>
+      </div>
+    </section>
+
+    <section class="education">
+      <div class="container">
+        <h2>Education</h2>
+        <div class="education-card">
+          <h3>Bachelor in Computer Application</h3>
+          <span>2021 - 2024</span>
+          <p>Focused on web development, programming, and software engineering.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="skills" class="skills-section">
+      <div class="container">
+        <h2>My Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <h4>Frontend</h4>
+            <p>HTML, CSS, JavaScript, Responsive Design</p>
+          </div>
+
+          <div class="skill-card">
+            <h4>Backend</h4>
+            <p>Laravel (PHP), JavaScript, Ajax, REST APIs</p>
+          </div>
+
+          <div class="skill-card">
+            <h4>Tools</h4>
+            <p>Github, Postman, VS Code</p>
+          </div>
+
+          <div class="skill-card">
+            <h4>Other</h4>
+            <p>Performance Optimization, Accessibility</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <div class="container">
+        <h2>Services</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <h3>Web Development</h3>
+            <p>I build responsive and fast websites using modern technologies.</p>
+          </div>
+
+          <div class="service-card">
+            <h3>API Development</h3>
+            <p>Creating REST APIs using Laravel and integrating them with frontend apps.</p>
+          </div>
+
+          <div class="service-card">
+            <h3>Website Optimization</h3>
+            <p>Improving website performance, accessibility, and SEO.</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="projects" id="projects">
-      <h3>Projects</h3>
-      <div class="projects-container">
+      <div class="container">
+        <h3>Projects</h3>
+        <div class="projects-container">
+        </div>
       </div>
     </section>
 
     <section id="contact" class="contact">
       <div class="container">
         <h2>Contact</h2>
-        <p>If you’d like to work together, email me at <a href="mailto:sahil512sk@gmail.com" id="person-email">
-            sahil512sk@gmail.com
-          </a> or use the social links below.</p>
         <p>
-          <a class="btn" href="assets/pdf/cv.pdf" download="cv.pdf">Download resume</a>
-          <a class="btn" href="mailto:sahil512sk@gmail.com">Email me</a>
+          If you’d like to work together, email me at
+          <a href="mailto:" id="person-email">
+          </a>
+          or use the social links below.
         </p>
+
+        <p>
+          <a class="btn" href="#" download="cv.pdf">Download resume</a>
+          <a class="btn" href="mailto:">Email me</a>
+        </p>
+      </div>
+
+      <div class="social-links">
+        <a href="#" target="_blank">GitHub</a>
+        <a href="#" target="_blank">LinkedIn</a>
       </div>
     </section>
   </main>
@@ -102,15 +175,18 @@
     </div>
   </footer>
 
-  <!-- Project modal -->
   <div id="project-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true"
     aria-labelledby="modal-title">
+
     <div class="modal-content" role="document">
       <button class="modal-close" aria-label="Close project">✕</button>
+
       <h3 id="modal-title"></h3>
       <p id="modal-desc"></p>
+
       <div id="modal-links"></div>
     </div>
+
   </div>
 
   <script src="script.js" defer></script>
