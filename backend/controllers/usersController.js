@@ -16,7 +16,7 @@ const postUser = async (req, res) => {
 
     if (req.files && req.files.length > 0) {
       req.files.forEach((file, index) => {
-        // console.log(`File ${index}:`, file.fieldname, file.originalname, file.filename);
+    // console.log(`File ${index}:`, file.fieldname, file.originalname, file.filename);
         if (file.fieldname === 'cv') {
           cvFilename = file.filename;
         } else if (file.fieldname === 'avatar') {
@@ -24,16 +24,26 @@ const postUser = async (req, res) => {
         }
       });
     }
+    
     const userData = {
       ...req.body,
       avatar: avatarFilename,
       cv: cvFilename,
     };
-    // console.log('User data to save:', userData);
 
-    const newUser = new User(userData);
-    await newUser.save();
-    res.json({ message: 'User saved successfully', user: newUser });
+    const hasUserData = req.body.name || req.body.email || req.body.role || req.body.about || req.body.github || req.body.whatsapp;
+    
+    if (!hasUserData && !cvFilename && !avatarFilename) {
+      return res.status(400).json({ error: 'No user data provided' });
+    }
+
+    if (hasUserData || cvFilename || avatarFilename) {
+      const newUser = new User(userData);
+      await newUser.save();
+      res.json({ message: 'User saved successfully', user: newUser });
+    } else {
+      return res.status(400).json({ error: 'No user data provided' });
+    }
   } catch (err) {
     // console.error('Error saving user:', err);
     res.status(500).json({ error: err.message });

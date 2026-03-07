@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
           userData[key] = value.split(',').map(s => s.trim()).filter(Boolean);
         } else if (['name', 'email', 'role', 'about', 'github', 'whatsapp'].includes(key)) {
           userData[key] = value;
-        } else if (['title', 'description', 'gitlink', 'livelink'].includes(key)) {
+        } else if (['title', 'description', 'gitlink', 'livelink', 'image'].includes(key)) {
           // Handle multiple projects - collect all project fields
           if (!projectData.projects) {
             projectData.projects = [];
@@ -24,7 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
           const projectInputs = form.querySelectorAll(`input[name="${key}"], textarea[name="${key}"]`);
           projectInputs.forEach((input, index) => {
-            if (input.value && input.value.trim()) {
+            if (input.type === 'file' && input.files && input.files[0]) {
+              if (!projectData.projects[index]) {
+                projectData.projects[index] = {};
+              }
+            } else if (input.value && input.value.trim()) {
               if (!projectData.projects[index]) {
                 projectData.projects[index] = {};
               }
@@ -65,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
       (formData.has('avatar') && formData.get('avatar') instanceof File);
     // console.log('Has file:', hasFile);
 
-    const hasProjects = formData.has('title') || formData.has('description') || formData.has('gitlink') || formData.has('livelink');
+    const hasProjects = formData.has('title') || formData.has('description') || formData.has('gitlink') || formData.has('livelink') || formData.has('image');
     // console.log('Has projects:', hasProjects);
 
     const hasWorkExperience = formData.has('company') || formData.has('position') || formData.has('start_date');
@@ -105,12 +109,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (hasProjects) {
       try {
-        const projectResponse = await fetch('http://localhost:3000/projects/postProjects', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(projectData)
-        });
-        responses.push(projectResponse);
+        const hasProjectImages = formData.has('image');
+        if (hasProjectImages) {
+          const projectResponse = await fetch('http://localhost:3000/projects/postProjects', {
+            method: 'POST',
+            body: formData
+          });
+          responses.push(projectResponse);
+        } else {
+          const projectResponse = await fetch('http://localhost:3000/projects/postProjects', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(projectData)
+          });
+          responses.push(projectResponse);
+        }
       } catch (err) {
         alert('Failed to submit project data.');
         return;

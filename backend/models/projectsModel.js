@@ -15,6 +15,10 @@ const projectSchema = new mongoose.Schema({
     livelink: {
         type: String,
         required: false,
+    },
+    image: {
+        type: String,
+        required: false,
     }
 },
     {

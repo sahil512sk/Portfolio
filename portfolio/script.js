@@ -15,6 +15,7 @@ async function loadData() {
       if (githubLink && user.github) {
         githubLink.href = user.github;
       }
+
       const whatsappLink = document.querySelector('#whatsapp');
       if (whatsappLink && user.whatsapp) {
         whatsappLink.href = user.whatsapp;
@@ -32,16 +33,13 @@ async function loadData() {
         if (avatarImg) {
           avatarImg.src = `http://localhost:3000/uploads/${user.avatar}`;
           avatarImg.style.display = 'block';
-          const svg = avatarImg.nextElementSibling;
-          if (svg && svg.tagName === 'svg') {
-            svg.style.display = 'none';
-          }
         }
       }
     }
 
     const projectsRes = await fetch('http://localhost:3000/projects/getProjects');
     const projects = await projectsRes.json();
+    // console.log('Projects data:', projects);
 
     const projectsContainer = document.querySelector('.projects-container');
     if (projects && projects.length > 0) {
@@ -49,15 +47,22 @@ async function loadData() {
       existingCards.forEach(card => card.remove());
 
       projects.forEach(project => {
+        // console.log('Project:', project);
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
 
+        const projectImage = project.image ? `<img src="http://localhost:3000/uploads/${project.image}" alt="${project.title}" onerror="console.log('Image failed to load:', this.src)">` : '<div style="width: 100%; height: 280px; background: #333; display: flex; align-items: center; justify-content: center; color: #666;">No Image</div>';
+        // console.log('Project image HTML:', projectImage);
+
         projectCard.innerHTML = `
-          <h4>${project.title}</h4>
-          <p>${project.description}</p>
-          <div class="project-links">
-            <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
-            <a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>
+          ${projectImage}
+          <div class="project-content">
+            <h4>${project.title}</h4>
+            <p>${project.description}</p>
+            <div class="project-links">
+              <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
+              <a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>
+            </div>
           </div>
         `;
 
@@ -69,7 +74,9 @@ async function loadData() {
 
           modalTitle.textContent = project.title;
           modalDesc.textContent = project.description;
+          const modalImage = project.image ? `<img src="http://localhost:3000/uploads/${project.image}" alt="${project.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">` : '';
           modalLinks.innerHTML = `
+            ${modalImage}
             <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
             <a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>
           `;
@@ -108,7 +115,7 @@ async function loadData() {
       });
     }
   } catch (error) {
-    console.error('Error loading data:', error);
+    // console.error('Error loading data:', error);
   }
 }
 

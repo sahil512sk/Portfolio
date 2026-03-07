@@ -110,6 +110,13 @@
       liveLinkInput.placeholder = 'Enter live demo link';
       liveLinkInput.name = 'livelink';
 
+      const imageLabel = document.createElement('label');
+      imageLabel.textContent = 'Project Image:';
+      const imageInput = document.createElement('input');
+      imageInput.type = 'file';
+      imageInput.accept = 'image/*';
+      imageInput.name = 'image';
+
       const removeBtn = document.createElement('button');
       removeBtn.textContent = 'Remove Project';
       removeBtn.classList.add('remove-btn');
@@ -125,6 +132,8 @@
       newDiv.appendChild(gitLinkInput);
       newDiv.appendChild(liveLabel);
       newDiv.appendChild(liveLinkInput);
+      newDiv.appendChild(imageLabel);
+      newDiv.appendChild(imageInput);
       newDiv.appendChild(removeBtn);
 
       const projectContainer = document.getElementById('projects-container');

@@ -16,7 +16,7 @@ const postWork = async (req, res) => {
       data: workExperiences
     });
   } catch (error) {
-    console.error('Error saving work experiences:', error);
+    // console.error('Error saving work experiences:', error);
     res.status(500).json({ error: 'Failed to save work experiences' });
   }
 };
@@ -26,7 +26,7 @@ const getWork = async (req, res) => {
     const workExperiences = await Work.find().sort({ start_date: -1 });
     res.status(200).json(workExperiences);
   } catch (error) {
-    console.error('Error fetching work experiences:', error);
+    // console.error('Error fetching work experiences:', error);
     res.status(500).json({ error: 'Failed to fetch work experiences' });
   }
 };
