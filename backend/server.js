@@ -18,12 +18,15 @@ dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.static("portfolio"));
+// app.use(express.static("portfolio"));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/projects', projectRoutes);
 app.use('/users', UserRoutes);
 app.use('/work', workRoutes);
-
+app.use(express.static(path.join(__dirname, "public")));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 async function startServer() {
   const db = await connectDB();
   const PORT = process.env.PORT || 3000;
