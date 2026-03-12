@@ -10,8 +10,6 @@ const projectRoutes = require('./routes/projectsRoutes');
 const UserRoutes = require('./routes/usersRoutes');
 const workRoutes = require('./routes/workRoutes');
 const app = express();
-const dotenv = require("dotenv");
-dotenv.config();
 
 // MONGO_URI=mongodb+srv://sahil512sk_coc:Rdx_tbijm_049@cluster0.9xdwln3.mongodb.net/
 // PORT=3000
