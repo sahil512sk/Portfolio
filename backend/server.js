@@ -22,7 +22,10 @@ const UserRoutes = require('./routes/usersRoutes');
 const workRoutes = require('./routes/workRoutes');
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://localhost:3000', 'http://127.0.0.1:3000'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

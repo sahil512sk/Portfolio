@@ -1,15 +1,17 @@
 async function loadData() {
   try {
     // Dynamic API URL - works on both localhost and production
-    const API_BASE = window.location.origin;
-    console.log('Loading data from:', API_BASE);
+    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? 'http://localhost:3000' 
+      : window.location.origin;
+    // console.log('Loading data from:', API_BASE);
     
     const userRes = await fetch(`${API_BASE}/users/getUsers`);
     if (!userRes.ok) {
       throw new Error(`Failed to fetch users: ${userRes.status}`);
     }
     const userData = await userRes.json();
-    console.log('Users data loaded:', userData.length, 'users found');
+    // console.log('Users data loaded:', userData.length, 'users found');
 
     if (userData.length > 0) {
       const user = userData[0];
@@ -49,10 +51,10 @@ async function loadData() {
       throw new Error(`Failed to fetch projects: ${projectsRes.status}`);
     }
     const projects = await projectsRes.json();
-    console.log('Projects data loaded:', projects.length, 'projects found');
+    // console.log('Projects data loaded:', projects.length, 'projects found');
 
     const projectsContainer = document.querySelector('.projects-container');
-    if (projects && projects.length > 0) {
+    if (projectsContainer && projects && projects.length > 0) {
       const existingCards = projectsContainer.querySelectorAll('.project-card');
       existingCards.forEach(card => card.remove());
 
@@ -68,8 +70,8 @@ async function loadData() {
             <h4>${project.title}</h4>
             <p>${project.description}</p>
             <div class="project-links" style="margin-bottom: 15px;">
-              <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
-              <a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>
+              ${project.gitlink ? `<a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>` : ''}
+              ${project.livelink ? `<a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>` : ''}
             </div>
           </div>
         `;
@@ -85,8 +87,8 @@ async function loadData() {
           const modalImage = project.image ? `<img src="${API_BASE}/uploads/${project.image}" alt="${project.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">` : '';
           modalLinks.innerHTML = `
             ${modalImage}
-            <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
-            <a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>
+            ${project.gitlink ? `<a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>` : ''}
+            ${project.livelink ? `<a href="${project.livelink}" target="_blank" class="btn">Live Demo</a>` : ''}
           `;
 
           modal.classList.add('show');
@@ -102,10 +104,10 @@ async function loadData() {
       throw new Error(`Failed to fetch work: ${workRes.status}`);
     }
     const workExperiences = await workRes.json();
-    console.log('Work data loaded:', workExperiences.length, 'work experiences found');
+    // console.log('Work data loaded:', workExperiences.length, 'work experiences found');
 
     const workContainer = document.querySelector('.work-container');
-    if (workExperiences && workExperiences.length > 0) {
+    if (workContainer && workExperiences && workExperiences.length > 0) {
       const existingCards = workContainer.querySelectorAll('.work-card');
       existingCards.forEach(card => card.remove());
 
@@ -127,7 +129,7 @@ async function loadData() {
       });
     }
   } catch (error) {
-    console.error('Error loading data:', error);
+    // console.error('Error loading data:', error);
     const errorDiv = document.createElement('div');
     errorDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #ef4444; color: white; padding: 10px 15px; border-radius: 5px; z-index: 9999;';
     errorDiv.textContent = 'Failed to load portfolio data. Please refresh the page.';
@@ -182,33 +184,22 @@ $$('a[href^="#"]').forEach(link => {
   });
 });
 
-const modal = $("#project-modal");
-const modalTitle = $("#modal-title");
-const modalDesc = $("#modal-desc");
-const closeModalBtn = $(".modal-close");
-
-$$(".project-card").forEach(card => {
-  card.addEventListener("click", () => {
-    const title = card.querySelector("h4").textContent;
-    const desc = card.querySelector("p").textContent;
-
-    modalTitle.textContent = title;
-    modalDesc.textContent = desc;
-
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden", "false");
-  });
-});
-
 function closeModal() {
-  modal.classList.remove("show");
-  modal.setAttribute("aria-hidden", "true");
+  const modal = document.getElementById('project-modal');
+  if (modal) {
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+  }
 }
 
-closeModalBtn.addEventListener("click", closeModal);
+const closeModalBtn = document.querySelector(".modal-close");
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", closeModal);
+}
 
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
+document.addEventListener("click", (e) => {
+  const modal = document.getElementById('project-modal');
+  if (modal && e.target === modal) closeModal();
 });
 
 document.addEventListener("keydown", (e) => {
@@ -246,7 +237,7 @@ if (form) {
       }
     } catch (error) {
       alert("Oops! There was a network error. Please check your connection and try again.");
-      console.error("Form submission error:", error);
+      // console.error("Form submission error:", error);
     } finally {
       // Reset button state
       submitButton.disabled = false;
