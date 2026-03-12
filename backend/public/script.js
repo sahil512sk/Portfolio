@@ -1,7 +1,15 @@
 async function loadData() {
   try {
-    const userRes = await fetch('http://localhost:3000/users/getUsers');
+    // Dynamic API URL - works on both localhost and production
+    const API_BASE = window.location.origin;
+    console.log('Loading data from:', API_BASE);
+    
+    const userRes = await fetch(`${API_BASE}/users/getUsers`);
+    if (!userRes.ok) {
+      throw new Error(`Failed to fetch users: ${userRes.status}`);
+    }
     const userData = await userRes.json();
+    console.log('Users data loaded:', userData.length, 'users found');
 
     if (userData.length > 0) {
       const user = userData[0];
@@ -23,22 +31,25 @@ async function loadData() {
       if (user.cv) {
         const cvLink = document.getElementById('cv-link');
         if (cvLink) {
-          cvLink.href = `http://localhost:3000/uploads/${user.cv}`;
+          cvLink.href = `${API_BASE}/uploads/${user.cv}`;
         }
       }
 
       if (user.avatar) {
         const avatarImg = document.getElementById('person-avatar');
         if (avatarImg) {
-          avatarImg.src = `http://localhost:3000/uploads/${user.avatar}`;
+          avatarImg.src = `${API_BASE}/uploads/${user.avatar}`;
           avatarImg.style.display = 'block';
         }
       }
     }
 
-    const projectsRes = await fetch('http://localhost:3000/projects/getProjects');
+    const projectsRes = await fetch(`${API_BASE}/projects/getProjects`);
+    if (!projectsRes.ok) {
+      throw new Error(`Failed to fetch projects: ${projectsRes.status}`);
+    }
     const projects = await projectsRes.json();
-    // console.log('Projects data:', projects);
+    console.log('Projects data loaded:', projects.length, 'projects found');
 
     const projectsContainer = document.querySelector('.projects-container');
     if (projects && projects.length > 0) {
@@ -46,12 +57,10 @@ async function loadData() {
       existingCards.forEach(card => card.remove());
 
       projects.forEach(project => {
-        // console.log('Project:', project);
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
 
-        const projectImage = project.image ? `<img src="http://localhost:3000/uploads/${project.image}" alt="${project.title}" onerror="console.log('Image failed to load:', this.src)">` : '<div style="width: 100%; height: 280px; background: #333; display: flex; align-items: center; justify-content: center; color: #666;">No Image</div>';
-        // console.log('Project image HTML:', projectImage);
+        const projectImage = project.image ? `<img src="${API_BASE}/uploads/${project.image}" alt="${project.title}" onerror="console.log('Image failed to load:', this.src)">` : '<div style="width: 100%; height: 280px; background: #333; display: flex; align-items: center; justify-content: center; color: #666;">No Image</div>';
 
         projectCard.innerHTML = `
           ${projectImage}
@@ -73,7 +82,7 @@ async function loadData() {
 
           modalTitle.textContent = project.title;
           modalDesc.textContent = project.description;
-          const modalImage = project.image ? `<img src="http://localhost:3000/uploads/${project.image}" alt="${project.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">` : '';
+          const modalImage = project.image ? `<img src="${API_BASE}/uploads/${project.image}" alt="${project.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">` : '';
           modalLinks.innerHTML = `
             ${modalImage}
             <a href="${project.gitlink}" target="_blank" class="btn">GitHub</a>
@@ -88,8 +97,12 @@ async function loadData() {
       });
     }
 
-    const workRes = await fetch('http://localhost:3000/work/getWork');
+    const workRes = await fetch(`${API_BASE}/work/getWork`);
+    if (!workRes.ok) {
+      throw new Error(`Failed to fetch work: ${workRes.status}`);
+    }
     const workExperiences = await workRes.json();
+    console.log('Work data loaded:', workExperiences.length, 'work experiences found');
 
     const workContainer = document.querySelector('.work-container');
     if (workExperiences && workExperiences.length > 0) {
@@ -114,7 +127,12 @@ async function loadData() {
       });
     }
   } catch (error) {
-    // console.error('Error loading data:', error);
+    console.error('Error loading data:', error);
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #ef4444; color: white; padding: 10px 15px; border-radius: 5px; z-index: 9999;';
+    errorDiv.textContent = 'Failed to load portfolio data. Please refresh the page.';
+    document.body.appendChild(errorDiv);
+    setTimeout(() => errorDiv.remove(), 5000);
   }
 }
 
